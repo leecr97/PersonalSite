@@ -1,0 +1,92 @@
+@import url(https://fonts.googleapis.com/css?family=Khula);
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  font: 'Khula', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Khula',sans-serif;
+}
+p, div {
+    font-family: 'Khula',sans-serif;
+}
+
+/* Remove the navbar's default margin-bottom and rounded borders */ 
+.navbar {
+  /*position: fixed;*/
+  height: 140px;
+  width: 100%;
+  margin-bottom: 0;
+  border-radius: 0;
+}
+
+/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+/*.row.content {height: 550px}*/
+
+/* Set gray background color and 100% height */
+.sidenav {
+  padding-top: 10px;
+  /*background-color: #f1f1f1;*/
+  height: 100%;
+  text-align: left;
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: 0px; /* 20px padding + 1px border */
+  margin-bottom: 0px;
+  margin-left: 0px;
+}
+.nav-sidebar > li > a {
+  padding-right: 0px;
+  padding-left: 0px;
+  color: #000;
+  font-size: 120%;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #75BEFF;
+  /*background-color: #234059;*/
+}
+
+.projectlist {
+  text-align: left;
+}
+
+.img {
+    image-orientation: from-image;
+}
+
+.navbar-brand
+{
+    position: relative;
+    top: 80px;
+    left: 105px;
+    /*width: 100%;*/
+    font-size: 40px !important;
+    color: #000 !important;
+    /*text-align: center;*/
+    /*margin:0 auto;*/
+}
+
+/* Set black background color, white text and some padding */
+/*footer {
+  background-color: #555;
+  color: white;
+  padding: 15px;
+}*/
+
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) {
+  .sidenav {
+    height: auto;
+    padding: 15px;
+  }
+  .row.content {height:auto;} 
+}
