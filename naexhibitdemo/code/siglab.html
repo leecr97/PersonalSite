@@ -397,7 +397,7 @@
 
 
            // second room connection
-           var nnMap = new THREE.TextureLoader().load("./images/arthurross.png");
+           var nnMap = new THREE.TextureLoader().load("./images/naexhibit.png");
            var nnMaterial = new THREE.SpriteMaterial( { map: nnMap } );
            var transport = new THREE.Sprite( nnMaterial );
 
@@ -412,7 +412,7 @@
 
 
            // second room node name. hidden by default
-           var s2label = makeTextSprite("To Arthur Ross Gallery", {
+           var s2label = makeTextSprite("To Native American Voices", {
               fontsize: 24,
               borderColor: {r:11, g:180, b:50, a:1.0},
               backgroundColor: {r:255, g:255, b:255, a:1.0}
@@ -719,7 +719,7 @@
                         var dist = pos.distanceTo(chosen.position);
                         console.log(dist);
                         if (dist < 20) {
-                            window.location = 'arthurross.html';
+                            window.location = 'naexhibit.html';
                         }
                     }
                 }
