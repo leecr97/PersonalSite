@@ -1,0 +1,2206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Representation of Women in Video Games</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Verdana);
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+        
+        body {
+            background-color: #ffffff;
+            margin: 0;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            font-family: 'Verdana', sans-serif;
+            cursor: default;
+        }
+        
+        #blocker, #endblocker {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        #endblocker {
+            display: none;
+        }
+        
+        #instructions, #endinstructions {
+            width: 100%;
+            height: 100%;
+            display: -webkit-box;
+            display: -moz-box;
+            display: box;
+            -webkit-box-orient: horizontal;
+            -moz-box-orient: horizontal;
+            box-orient: horizontal;
+            -webkit-box-pack: center;
+            -moz-box-pack: center;
+            box-pack: center;
+            -webkit-box-align: center;
+            -moz-box-align: center;
+            box-align: center;
+            color: #ffffff;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        #endinstructions {
+            display: none;
+        }
+
+        /* hamburger button stuff */
+        .navbar-default {
+            background-color: transparent;
+            border-color: #e7e7e7;
+            position: fixed;
+            right: 0;
+            left: 0;
+            z-index: 1030;
+            border-radius: 0;
+            top: 0;
+            border-width: 0 0 1px;
+            padding-right: 0;
+            padding-left: 0;
+            max-height: 340px;
+        }
+
+        .hamburger {
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .bar1, .bar2, .bar3 {
+            width: 35px;
+            height: 5px;
+            background-color: #333;
+            margin: 6px 0;
+            transition: 0.4s;
+        }
+
+        /* Rotate first bar */
+        .change .bar1 {
+            -webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
+            transform: rotate(-45deg) translate(-9px, 6px) ;
+        }
+
+        /* Fade out the second bar */
+        .change .bar2 {
+            opacity: 0;
+        }
+
+        /* Rotate last bar */
+        .change .bar3 {
+            -webkit-transform: rotate(45deg) translate(-8px, -8px) ;
+            transform: rotate(45deg) translate(-8px, -8px) ;
+        }
+
+        .accordionmenu {
+          opacity: 0;
+          max-height: 0;
+          overflow: hidden;
+          transition: 0.6s ease-in-out;
+        }
+
+        .accordionmenu.show {
+          opacity: 1;
+          max-height: 500px;
+        }
+
+        /* Style the buttons that are used to open and close the accordion panel */
+        button.accordion {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: 0.4s;
+            font-size: 15px;
+        }
+
+        /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+        button.accordion.active, button.accordion:hover {
+            background-color: #ddd;
+        }
+
+        button.accordion:after {
+            content: '\002B'; /* Unicode character for "plus" sign (+) */
+            font-size: 13px;
+            color: #777;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        button.accordion.active:after {
+            content: "\2212"; /* Unicode character for "minus" sign (-) */
+        }
+
+        /* Style the accordion panel.*/
+        div.panel {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0px;
+            overflow: hidden;
+            transition: 0.6s ease-in-out;
+            opacity: 0;
+            /*display: none;*/
+        }
+
+        .panel.show {
+          opacity: 1;
+          max-height: 500px;
+          /*display: inline;*/
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-header {
+            padding: 2px 16px;
+            background-color: #4286f4;
+            color: white;
+        }
+
+        .modal-body {padding: 2px 16px;}
+
+        .modal-footer {
+            padding: 2px 16px;
+            background-color: #4286f4;
+            color: white;
+        }
+
+        .modal-content-small {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 440px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s
+        }
+
+        .modal-content-large {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 100%;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: #081e3f;
+            color: white;
+            margin: auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 100%;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s
+        }
+
+        .modal-content-convo {
+            position: relative;
+            background-color: #b2b2b2;
+            color: white;
+            margin: auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 100%;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s
+        }
+
+        .modal-dialog-bottom {
+           position:fixed;
+           top: 400px;
+           right:auto;
+           left:auto;
+           bottom:0;
+           width: 100%;
+        }  
+
+        .charpic {
+          background-image: url(./images/elf.gif);
+          display: inline-block;
+          width: 400px;
+          height: 400px;
+          vertical-align: top;
+          /*margin: 0 auto;*/
+        }
+
+        .elfhead {
+          background-image: url(./images/elfhead.png);
+          /*display: inline-block;*/
+          width: 100px;
+          height: 100px;
+          /*vertical-align: top;*/
+        }
+
+        .desc {
+          display: inline-block;
+          width: 100%;
+          vertical-align: top;
+          /*margin-left: 5%;*/
+          /*margin: 0 auto;*/
+        }
+
+        .choice {
+          /*display: inline-block;*/
+          /*width: 30%;
+          margin: 0 auto;*/
+        }
+
+        .centertext {
+          text-align: center;
+            vertical-align: middle;
+        }
+
+        .carousel-content {
+            color:black;
+            display:flex;
+            align-items:center;
+        }
+
+        .carousel-content-talk {
+            display:flex;
+            align-items:center;
+            color: white;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+        }
+
+        div[id^="text-carousel-"], div[id*=" text-carousel-"] {
+          width: 100%;
+          height: auto;
+          padding: 50px; 
+        }
+
+        div[id^="text-carousel-talk"], div[id*=" text-carousel-talk"] {
+          -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+        }
+
+        ul {
+          list-style-type: none;
+        }
+
+        li:hover, .chosen {
+          color: #75BEFF;
+          cursor: pointer;
+        }
+
+        .hidebtn {
+            display: none;
+        }
+
+        .centerdiv {
+            /*position: absolute;*/
+            left: 80px;
+            right: 0;
+            margin: auto; 
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- jQuery -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <!-- BS JavaScript -->
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <!-- TWEEN <script type='text/javascript' src='js/tween.js'></script>-->
+    
+
+    <script src="../build/three.min.js"></script>
+    <script src="js/controls/FirstPersonControls.js"></script>
+
+    <script src="js/loaders/DDSLoader.js"></script>
+    <script src="js/loaders/MTLLoader.js"></script>
+    <script src="js/loaders/OBJLoader.js"></script>
+
+    <script src="js/Detector.js"></script>
+    <script src="js/libs/stats.min.js"></script>
+
+    <!-- navbar-default navbar-fixed-top -->
+    <div class="navbar-default">
+        <div class="hamburger" onclick="showHamburger(this)">
+          <div class="bar1"></div>
+          <div class="bar2"></div>
+          <div class="bar3"></div>
+        </div>
+
+        <div class="accordionmenu" id = "dropdown">
+            <button class="accordion">Credits</button>
+            <div class="panel">
+              <p>©Crystal Lee 2017</p>
+            </div>
+
+            <button class="accordion">Contact</button>
+            <div class="panel">
+              <p>Email: leecr@seas.upenn.edu</p>
+            </div>
+
+            <!-- <button class="accordion">Section 3</button>
+            <div class="panel">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+            </div> -->
+        </div>
+    </div>
+
+    <!-- <div id="ThreeJS" style="position: absolute; left:0px; top:0px">
+    </div> -->
+
+
+    <div id="charmodalwindow" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="charModalLabel" aria-hidden="true">
+      <div class="modal-content-small">
+          <div id="modalheader" class="modal-header">
+            <!-- <span class="close">&times;</span> -->
+            <h3 class="centertext"> Your Character Has Been Created </h3>
+          </div>
+
+          <div id="modalcontent" class="modal-body">
+            <div class="desc">
+                <h2 id="elfname" class="centertext"></h2>
+            </div>
+
+            <div class="charpic animated flipInY">
+                <!-- <img id="elfimg" src="./images/elf.gif" class="pic animated flipIn"> -->
+            </div>
+          </div>
+
+          <!-- <div id="modalfooter" class="modal-footer">
+          </div> -->
+        </div>
+    </div>
+
+<div id="infomodalwindow1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div id="modalheader" class="modal-header">
+        <!-- <span class="close">&times;</span> -->
+        <h2 class="centertext"> Topic 1: Sexualization of Women in Video Games </h2>
+      </div>
+
+    <div class="modal-content-large">
+
+    <div id="text-carousel-info1" class="carousel slide" data-ride="carousel" data-interval="false">
+        <div class="row">
+            <div class="col-xs-offset-3 col-xs-6">
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <div class="carousel-content">
+                            <div>
+                                <p>Women in video games are generally far more sexualized than men are. They wear very revealing clothing compared to the men and are portrayed in much more sexual ways. This sexualization of women is not only limited to the games themselves, but also to their advertisements, covers, and online reviews.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>
+                                <p>In a content analysis performed by B. Beasley and T.C. Standley, a significant sex bias was found in the the way in which the male and female characters were dressed. The authors studied gender representations in 47 randomly selected games associated with the Nintendo 64 and Sony PlayStation consoles, coding each character that appeared in the first 20 minutes of playing each game and noting their clothing. They found that female characters wore less clothing and exposed more skin than male characters. Sleeve length was compared with gender in a cross-tabulation, and the result of this showed that nearly one half of the female characters were shown with no sleeves. Most of the women were wearing clothing such as halter tops, tank tops, and bathing suits. A cross-tabulation of neckline showed similar results. Of those characters shown with a low neckline, in which cleavage or pecs were visible, 85.71% were women. When cleavage was featured for a female character, 40.9% of the women were coded as voluptuous, 56.3% as average in breast size, and only 2.8% as “flat” chested. Overall, Beasley and Standley find strong evidence of gender stereotyping in the games, with females presented largely as sexual objects.</p>
+                                <br><b>Beasley, B. &amp; Standley, T. C. (2009). Shirts vs. Skins: Clothing as an Indicator of Gender Role Stereotyping in Video Games. Mass Communication and Society, 5(3),  279-293</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>
+                                <p>A 2009 content analysis by J. Ivory used video game reviews from a heavily trafficked Internet site to investigate the prevalence and portrayal of male and female video game characters. The coding scheme recorded the gender of a character by the gender-related characteristics or the gender-specific pronouns that the reviewer used, and also measured the sexual attractiveness of that character by observing how they were described in the reviewers' commentary, whether tersely (e.g., “dashing,” “beautiful”) or in detail (e.g., “looks sexy in that revealing outfit”). The results showed that female characters were proportionally more often sexualized in comparison to their male counterparts. Though female characters were underrepresented overall, their attractiveness and sexuality were mentioned in proportionally more reviews than that of males. Less than 1% of the 75 reviews mentioning male characters included a reference to a male character’s attractiveness or sexual appeal, but 12% of the 42 reviews mentioning female characters included such references to females. </p>
+                                <br><b>Ivory, J. (2009). Still a Man’s Game: Gender Representation in Online Reviews of Video Games. Mass communication &amp; society, 9(1). doi:10.1207/s15327825mcs0901_6</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>                          
+                                <p>Burgess and Stermer (2007) conducted a content analysis that analyzed 225 console video game covers obtained from online retail sites for portrayals of men and women. Every character on the covers was coded as either human or non-human, and further coded by gender (male, female, or unknown). Additionally, each human character was further coded as a whole figure or part of a figure. The study also measured physical objectification for both genders using metrics such as being portrayed in a sexy way, exaggerated bust/groin, vulgar clothing, tight clothing to accentuate body parts, revealing dress and/or being portrayed as simply a part other than a face (e.g., just thighs). They found that female characters were far more likely to be objectified than the males. 84% of female characters (38/45) were depicted as simply a body part, compared to 55% of male characters. Physical objectification of females occurred on 47.4% of the covers and 42.3% of the characters were portrayed in physically objectified ways. For males, physical objectification occurred in 13.5% of the covers and 5.8% of the characters were portrayed in physically objectified ways. </p>
+                                <br><b>Burgess, M., Stermer, S., &amp; Burgess, S. (2007). Sex, Lies, and Video Games: The Portrayal of Male and Female Characters on Video Game Covers. Sex roles., 57(5-6).</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>                          
+                                <p>Scharrer (2009) conducted a content analysis of 1,054 video game advertisements contained in large-circulation video game magazines. Though the study's main focus is depictions of violence, it also examines the portrayal of gender and the extent of sexualization in the images and text of the ads. Results show that when female characters were present in the ads, they are largely shown in a way that is consistent with male fantasies—that is, as highly attractive and highly sexualized. In the ads examined, females wore tight-fitting clothing, showed cleavage or otherwise had their breasts emphasized, and were very commonly voluptuous and thin. </p>
+                                <br><b>Scharrer, E. (2009). Virtual Violence: Gender and Aggression in Video Game Advertisements. Mass Communication and Society, 7(4), 393-412</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>                          
+                                <p>A. Summers and M. Miller(2014) examined video game magazines and analyzed the portrayal of female video game characters and how this portrayal has changed in the last twenty years. The video game magazine articles coded ranged from 1988 - 2007. Coders were instructed to read the articles and rate the female characters on various scales, such as "sexy," "helpless," and "innocent." They were also instructed to rate how revealing the character's attire is. A total of 223 female characters from 175 game magazines were coded. The results of the study found that, over time, there has been a decrease in benevolent sexism and an increase in hostile sexism. Benevolent sexism includes traditional gender role attitudes for women, a sense of protective paternalism, a desire for intimacy, and complementary gender differentiation where women are perceived as more moral or pure than men. Hostile sexism endorses the exploitation of women as sexual objects and the idea of dominant paternalism, where men have the power and women do not. In other words, over the past 20 years, there have been less damsals in distress, but more sexualized women with revealing outfits.
+                                </p>
+                                <br><b>A. Summers &amp; M. K. Miller (2014). From Damsels in Distress to Sexy Superheroes. Feminist Media Studies, 14(6), 1028-1040.</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>                          
+                                <p>E. Behm-Morawitz(2014) conducted a content analysis to examine the diversity of gender and race representations in video game advertising in the USA. The study coded 383 US magazine advertisements of console, mobile, and PC video games. Behm-Morawitz pays special attention to the ways race intersects with gender in character representations in video game advertisements. Her study examines how the representations of race/ethnicity and gender are tied to character appearance (e.g., provocativeness of attire) and depicted behaviors (e.g., acting violently). Coders judged, among other things, the gender, apparent race, violent behavior, attractiveness, body type, and how revealing the attire is of up to six prominant characters from each ad. The results found that female characters are disproportionately portrayed as attractive in comparison to male characters, especially White and Asian female characters. Additionally, female characters are significantly more likely than male characters to have a sexualized appearance, especially white female characters. Finally, the results indicate that females were disproportionately likely to be portrayed in various states of undress, with a greater degree of skin showing than their male counterparts.</p>
+                                <br><b>Behm-Morawitz, E. (2014). Examining the intersection of race and gender in video game advertising. Journal of Marketing Communications, 23(17), 220-239</b>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <a class="left carousel-control" href="#text-carousel-info1" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      </a>
+     <a class="right carousel-control" href="#text-carousel-info1" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+
+    </div>
+</div>
+
+    <div id="modalfooter" class="modal-footer">
+        <p> Total works cited: 6 </p>
+      </div>
+  </div>
+</div>
+
+<div id="talkmodalwindow" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="talkModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+    <div id="text-carousel-talk" class="carousel slide" data-ride="carousel" data-interval="false">
+        <!-- Wrapper for slides -->
+        <div class="row">
+            <div class="carousel-content-talk">
+                <div>
+                    <p>Hello! Welcome to my Capstone presentation. This project is guided by the research question, "How are women represented in video games?" The question is organized into several important concepts, each of which are supported by a subset of literature.</p>
+                    <p>Though women have made large strides in many other forms of media, in the medium of video games, women are still subjects of negative representation. To illustrate this, <i>you</i> will now put yourself in the shoes of a female character in a video game. First things first, what is your name?</p>
+                    <div class="row centerdiv">    
+                    <form>                      
+                    <div id="nameform" class="form-inline">
+                        <input type="text" id="nameInput" class="form-control" placeholder="Enter Your Name">
+                        <button type="button" class="btn btn-primary" onclick="getName();">Done!</button>
+                    </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+  </div>
+</div>
+
+<div id="fillmodalwindow" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fillModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+        <div id="text-carousel-talk" class="carousel slide" data-ride="carousel" data-interval="false">
+            <!-- Wrapper for slides -->
+            <div class="carousel-content-talk">
+                <div id="fillcont">
+                    <!-- to be filled by script -->
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div id="talkmodalwindow2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="talkModalLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+    <div id="text-carousel-talk-2" class="carousel slide" data-ride="carousel" data-interval="false">
+        <!-- Wrapper for slides -->
+        <div class="row">
+            <div class="carousel-content-talk">
+                <div>
+                    <p>There you are! In this game, your character will be one of the young residents of a warrior elf village.</p>
+                    <p>That's quite an… interesting outfit you’ve got there though. I'm worried you'll get cold!</p>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+  </div>
+</div>
+
+<div id="talkmodalwindow3" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="talkModalLabel3" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+    <div id="text-carousel-talk-3" class="carousel slide" data-ride="carousel" data-interval="false">
+        <!-- Wrapper for slides -->
+        <div class="carousel-content-talk">
+            <p>Now that you have your character, let’s move on! Looks like your village is just a bit up ahead.</p>
+        </div>
+
+    </div>
+</div>
+  </div>
+</div>
+
+<div id="talkmodalwindow4" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="talkModalLabel4" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+    <div id="text-carousel-talk-4" class="carousel slide" data-ride="carousel" data-interval="false">
+        <!-- Wrapper for slides -->
+        <div class="carousel-content">
+            <div class="carousel-content-talk">
+                <p>We're here! Say hello to your fellow villagers!</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+  </div>
+</div>
+
+<div id="talkmodalwindow5" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="talkModalLabel5" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+    <div id="text-carousel-talk-5" class="carousel slide" data-ride="carousel" data-interval="false">
+        <!-- Wrapper for slides -->
+        <div class="carousel-content-talk">
+            <p>Apparently, there's some big monster that’s been terrorizing the village lately, so everyone's gathered. But wait, is this really everyone? It seems a little unbalanced...</p>
+        </div>
+
+    </div>
+</div>
+  </div>
+</div>
+
+
+<div id="infomodalwindow2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div id="modalheader" class="modal-header">
+        <!-- <span class="close">&times;</span> -->
+        <h2 class="centertext"> Topic 2: Lack of Significant Women in Video Games </h2>
+      </div>
+
+    <div class="modal-content-large">
+
+    <div id="text-carousel-info2" class="carousel slide" data-ride="carousel" data-interval="false">
+        <div class="row">
+            <div class="col-xs-offset-3 col-xs-6">
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <div class="carousel-content">
+                            <div>
+                                <p>Typically, women have much less representation in video games than men do. Many games have fewer female characters than men. Furthermore, women are shown less than men, but when they are shown, they are depicted in much more sexualized ways, which also hurts their representation. Additionally, fewer women play and develop video games, which further limits the chances for representation.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>
+                                <p>D. Williams, N. Martins, M. Consalvo, and J. Ivory conducted a large-scale content analysis in 2009 that with the objective of breaking down the representations of gender, race, and age in comparison to the general population. The sample included 150 games from a year across nine platforms, with the results weighted according to game sales to focus on the games that were actually being played by the public. There were a total of 8572 characters coded. Finally, to gain comparative baseline data from the actual US population, US census data was collected from the government census website. The results show that male characters are vastly more likely to appear than female characters. Compared to the 50.9/49.1 percent distribution in the actual population, the overall difference between men and women in video games is much more imbalanced at 85.23/14.77. </p>
+                                <br><b>Williams, D., Martins, N., Consalvo, M., &amp; Ivory, J. (2009). The virtual census: representations of gender, race and age in video games. New media &amp; society., 11(5). doi:10.1177/1461444809105354</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>
+                                <p>In 2014, X. Kondrat used survey research to gauge how gamers feel about the current representation of women in video games. The method used was an anonymous questionnaire that was sent out through social media so it was impossible to predict the amount of female and male respondents. About 78% of the respondents were male, and the most predominant age group was from 18-25 years old, showing that the video game audience is primarily male. The questionnaire asked both quantitative closed-end questions and qualitative open-ended questions about the respondent's opinion on the representation of females in video games. Results show that there is prevalent negative stereotyping and underrepresentation of the female gender. Notably, the answers show that the target audience of video games desires improvements in presentation of female gender as well as male. Additionally, Kondrat also privately emailed two Game Design experts (U. Benjaminsson and A. Mayes) and interviewed them. Both experts agreed that there are a lack of professionals in the game industry who are aware of gender studies and are qualified in them, which limits the quality of representation in the medium.</p>
+                                <br><b>Kondrat, X. (2015). Gender and video games: How is female gender generally represented in various genres of video games? Journal of comparative research in anthropology and sociology., 6(1), 171-193.</b>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>                          
+                                <p>J. Ivory's 2009 content analysis also delves into the lack of female characters in video games. The coding scheme recorded the gender of a character by the gender-related characteristics or the gender-specific pronouns that the reviewer used. It also included the activity/passivity of a character by judging their presence in the reviewers' commentary. The results showed that female characters were represented in far fewer of the sampled game reviews than male characters. Though 75% of the reviews mentioned male characters, only 42% mentioned female characters in any capacity. Images including male characters appeared in 78% of the reviews, whereas female characters appeared in images accompanying only 32% of the reviews. </p>
+                                <br><b>Ivory, J. (2009). Still a Man’s Game: Gender Representation in Online Reviews of Video Games. Mass communication &amp; society, 9(1). doi:10.1207/s15327825mcs0901_6</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>                          
+                                <p>Burgess and Stermer (2007)'s' content analysis of console video game covers also sheds light on the scarcity of female characters in video game advertisements. Every character on the covers was coded as either human or non-human, and further coded by gender (male, female, or unknown) and apparant relevance to the game (primary vs. ancillary). They found that male characters were significantly more likely to be present overall on the covers of video games. 90.2% of the covers with humans portrayed men and 42.7% portrayed women. In terms of medians and ranges: Male characters ranged in frequency from 0 to 20 per cover while females ranged from zero to five. The median number of males portrayed per cover was one, while the median number of females portrayed was zero. </p>
+                                <br><b>Burgess, M., Stermer, S., &amp; Burgess, S. (2007). Sex, Lies, and Video Games: The Portrayal of Male and Female Characters on Video Game Covers. Sex roles., 57(5-6).</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>                          
+                                <p> B. Beasley and T.C. Standley's 2009 content analysis also shows a significant sex bias was found in the number of male versus female characters found in the games. The authors studied gender representations in 47 randomly selected games associated with the Nintendo 64 and Sony PlayStation consoles, coding each character that appeared in the first 20 minutes of playing each game. Each game was also coded by rating, ranging from E (for everyone) to M (for mature audiences). Of the 597 characters coded, 71.5% were men, 13.7% were women, and 14.7% were undeterminable. Furthermore, the results show that female characters are equally poorly represented in all ratings of games. </p>
+                                <br><b>Beasley, B. &amp; Standley, T. C. (2009). Shirts vs. Skins: Clothing as an Indicator of Gender Role Stereotyping in Video Games. Mass Communication and Society, 5(3),  279-293</b>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>                          
+                                <p>Dietz (1998) used content analysis to examine the portrayal of women and the use of violent themes in a sample of 33 popular Nintendo and Sega Genesis video games. Each of the games were coded into the following categories: no female characters at all, female characters portrayed as sex objects or prizes, females as the victim, females as the hero, and females in feminine roles. The results showed that the most common portrayal of women was actually the complete absence of women at all. 41% of the games coded had no primary female characters, and 30% of the games coded did not represent the female population at all.</p>
+                                <br><b>Dietz, T. L. (1998). An Examination of Violence and Gender Role Portrayals in Video Games: Implications for Gender Socialization and Aggressive Behavior. Sex Roles, 38(5-6), 425-442</b>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <a class="left carousel-control" href="#text-carousel-info2" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      </a>
+     <a class="right carousel-control" href="#text-carousel-info2" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+
+    </div>
+</div>
+
+    <div id="modalfooter" class="modal-footer">
+        <p> Total works cited: 6 </p>
+      </div>
+  </div>
+</div>
+
+<div id="talkmodalwindow6" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="talkModalLabel6" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+    <div id="text-carousel-talk-6" class="carousel slide" data-ride="carousel" data-interval="false">
+        <!-- Wrapper for slides -->
+        <div class="carousel-content-talk">
+            <p>Hey, looks like someone wants to talk to you! Click on the exclamation mark by his head to see what's up!</p>
+        </div>
+
+    </div>
+</div>
+  </div>
+</div>
+
+<div id="convomodalwindow" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="convoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content-convo">
+        <div>
+            <img src="./images/elfhead.png" style="position:absolute; width:170px; height:170px">
+        </div>
+
+     <div id="text-carousel-convo" class="carousel slide" data-ride="carousel" data-interval="false">
+        <div class="row">
+            <h2 class="centertext"> Elf Chief</h2>
+        </div>
+
+        <!-- Wrapper for slides -->
+        <div class="row">
+            <div class="col-xs-offset-3 col-xs-6">
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <div class="carousel-content">
+                            <div id="greeting">
+                                <!-- filled in by script -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>
+                                <p>The other warriors and I intend to go hunt that behemoth down right now. You stay right here with the other women. Don't try to follow us! Stay safe, I will see you soon.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <!-- Controls --> <!-- <a class="left carousel-control" href="#text-carousel-convo" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      </a> -->
+     <a class="right carousel-control" href="#text-carousel-convo" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+
+    </div>
+</div>
+  </div>
+</div>
+
+<div id="talkmodalwindow7" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="talkModalLabel7" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+    <div id="text-carousel-talk-7" class="carousel slide" data-ride="carousel" data-interval="false">
+        <!-- Wrapper for slides -->
+        <div class="carousel-content-talk">
+            <div>
+                <p>Wait, we’re not invited to the big monster fight? Why can’t we join?! We can fight too!</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+  </div>
+</div>
+
+<div id="infomodalwindow3" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel3" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div id="modalheader" class="modal-header">
+        <!-- <span class="close">&times;</span> -->
+        <h2 class="centertext"> Topic 3: Passiveness of Women in Video Games </h2>
+      </div>
+
+    <div class="modal-content-large">
+
+    <div id="text-carousel-info3" class="carousel slide" data-ride="carousel" data-interval="false">
+        <div class="row">
+            <div class="col-xs-offset-3 col-xs-6">
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <div class="carousel-content">
+                            <div>
+                                <p>Women in video games tend to see far less action than men do. Player-controlled female characters are rarer than player-controlled male characters, and relatively few video games have female main characters as opposed to male. Women are often depicted as passive "damsals in distress" who wait for the men to rescue them.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>                          
+                                <p>Burgess and Stermer's (2007) content analysis of console video game covers is again relevant for discussions of the prominance of female characters vs. male characters. Every character on the covers was coded as either human or non-human, and further coded by gender (male, female, or unknown) and apparant relevance to the game (primary vs. ancillary). The study also measured role objectification for both genders using metrics such as being portrayed without action, being in a submissive role, being a reward to others, appearing unnecessary to the goal of the game, and requiring rescue without any clear attempts to help oneself. Among the ancillary characters, they found that the amount of men and women who were role objectified were roughly equal. However, among the primary characters, 20% of the female characters are role objectified compared to absolutely none of the primary male characters. Furthermore, they found a clear difference in how active and essential female and male characters are to the game. Male characters are almost five times more likely than female characters to be portrayed as the primary characters. Furthermore, of the primary female characters, over 30% of those were accompanied by a primary male character. By contrast, only 13% of primary male characters were accompanied by a primary female. </p>
+                                <br><b>Burgess, M., Stermer, S., &amp; Burgess, S. (2007). Sex, Lies, and Video Games: The Portrayal of Male and Female Characters on Video Game Covers. Sex roles., 57(5-6).</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>
+                                <p>Williams, Martins, Consalvo, and Ivory's virtual census of 2009 is helpful in breaking down the relevance of female characters and male characters. The sample included 150 games from a year across nine platforms, with the results weighted according to game sales to focus on the games that were actually being played by the public. There were a total of 8572 characters coded. Each character was coded for their status as a primary (player-controlled) or a secondary (computer-controlled) character. As stated before, the difference between male and female characters in video games was found to be much larger than the difference in real life, according to US census data. Among primary "action" characters, males are even more likely to appear and the difference is even larger. Thus, males appear more frequently in games than females, and even more so as drivers of the action. When females do appear, they are more likely to be in secondary roles than primary ones.</p>
+                                <br><b>Williams, D., Martins, N., Consalvo, M., &amp; Ivory, J. (2009). The virtual census: representations of gender, race and age in video games. New media &amp; society., 11(5). doi:10.1177/1461444809105354</b>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>                          
+                                <p>J. Ivory's 2009 content analysis of video game reviews from a heavily trafficked Internet site also investigated the prevalence of male and female video game characters. The coding scheme recorded the gender of a character by the gender-related characteristics or the gender-specific pronouns that the reviewer used. It also included the activity/passivity of a character by judging their presence in the reviewers' commentary. The results showed that female characters were represented in far fewer of the sampled game reviews than male characters. Furthermore, only a small portion of reviews that indicated primary characters named a female lead (10.9%) or primary characters of both genders (13.0%). Comparison of male and female characters’ appearance in active and passive roles found similar differences. Active male characters were mentioned in 75% of the reviews, whereas active female characters were described in only 33% of the reviews. Also, 65% of the reviews indicated male playable characters, whereas only 22% mentioned female playable characters. </p>
+                                <br><b>Ivory, J. (2009). Still a Man’s Game: Gender Representation in Online Reviews of Video Games. Mass communication &amp; society, 9(1). doi:10.1207/s15327825mcs0901_6</b>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>
+                                <p>X. Kondrat's 2014 survey research also gauges how gamers feel about the current representation of women in video games. The anonymous questionnaire was sent out through social media so it was impossible to predict the amount of female and male respondents. About 78% of the respondents were male, and the most predominant age group was from 18-25 years old. The results showed that much of the video game audience agrees with the statement that female characters are rarely protagonists of video games, although they do believe it has improved in recent years.</p>
+                                <br><b>Kondrat, X. (2015). Gender and video games: How is female gender generally represented in various genres of video games? Journal of comparative research in anthropology and sociology., 6(1), 171-193.</b>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>                          
+                                <p>Dietz's 1998 content analysis that examined the portrayal of women and the use of violent themes also shows the lack of prevalence of women in video games. Each of the games were coded into the following categories: no female characters at all, female characters portrayed as sex objects or prizes, females as the victim, females as the hero, and females in feminine roles. The results showed that the second most common portrayal of women was the woman as a victim that must be rescued, like a "damsal in distress." Women were portrayed in this manner 21% of the time. Often in these cases, the female victim was the princess of a kingdom. In other instances, the female victim was presented as a friend of the hero or as a woman being victimized by a gang of undesirable “brutes”. Dietz also finds that females are very often in non-significant roles compared to the men. They are portrayed as spectators or in other roles that are supportive to the male main character.</p>
+                                <br><b>Dietz, T. L. (1998). An Examination of Violence and Gender Role Portrayals in Video Games: Implications for Gender Socialization and Aggressive Behavior. Sex Roles, 38(5-6), 425-442</b>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <a class="left carousel-control" href="#text-carousel-info3" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      </a>
+     <a class="right carousel-control" href="#text-carousel-info3" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+
+    </div>
+</div>
+
+    <div id="modalfooter" class="modal-footer">
+        <p> Total works cited: 5 </p>
+      </div>
+  </div>
+</div>
+
+    <div>
+        <div >
+            <img id="confetti" src="./images/confetti.gif" style="position:absolute; display:none;">
+        </div>
+    </div>
+
+<div id="convomodalwindow2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="convoModalLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content-convo">
+        <div>
+            <!-- <h2 id="elfhead" class="centertext"> BLAHBLAH</h2> -->
+            <img src="./images/elfhead.png" style="position:absolute; width:170px; height:170px">
+        </div>
+
+     <div id="text-carousel-convo-2" class="carousel slide" data-ride="carousel" data-interval="false">
+        <div class="row">
+            <h2 class="centertext"> Elf Chief</h2>
+        </div>
+
+        <!-- Wrapper for slides -->
+        <div class="row">
+            <div class="col-xs-offset-3 col-xs-6">
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <div class="carousel-content">
+                            <div>
+                                <p>We've returned. The beast was tough to take down, but he could not withstand our combined strength. Good job, men. </p><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div id="getcookin">
+                                <!-- filled in by script -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <!-- Controls --> <!-- <a class="left carousel-control" href="#text-carousel-convo" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      </a> -->
+     <a class="right carousel-control" href="#text-carousel-convo-2" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+
+    </div>
+</div>
+  </div>
+</div>
+
+<div id="talkmodalwindow8" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="talkModalLabel8" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+    <div id="text-carousel-talk-8" class="carousel slide" data-ride="carousel" data-interval="false">
+        <!-- Wrapper for slides -->
+        <div class="carousel-content-talk">
+            <div>
+                <p>...Okay, this guy is starting to get on my nerves. Does he expect you to cook for him just because you're a woman?</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+  </div>
+</div>
+
+<div id="infomodalwindow4" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel4" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div id="modalheader" class="modal-header">
+        <!-- <span class="close">&times;</span> -->
+        <h2 class="centertext"> Topic 4: Stereotyping of Women in Video Games </h2>
+      </div>
+
+    <div class="modal-content-large">
+
+    <div id="text-carousel-info4" class="carousel slide" data-ride="carousel" data-interval="false">
+        <div class="row">
+            <div class="col-xs-offset-3 col-xs-6">
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <div class="carousel-content">
+                            <div>
+                                <p>Women in video games are often subjected to stereotypes. Some of which include the previously discussed archetypes of the "damsal in distress" or the overly sexualized woman. However, these stereotypes can have powerful effects on how players of video games perceive about real-world women. Furthermore, the stereotyping issues in video games do not limit themselves to women; racial minorities and even men are also stereotyped.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>
+                                <p>X. Kondrat(2014)'s survey research is mainly about the stereotyping of women in video games. The results of the study show that there is prevalent negative stereotyping of the female gender. Based on the replies of the respondents of the survey the most popular ways of stereotyping females in video games is by creating female characters which are sexually provocative and are almost undressed or dressed in a seductive way. Also, there is a lack of female protagonist in video games which can represent female as strong and independent.  Most of the respondents agreed that female gender stereotyping in video games happens because of the predominant male target audience. Several female respondents reported having negative perceptions of themselves due to the unrealistic sexualization of women in video games. Respondents also expressed concern about the negative stereotyping of men as well as women. Additionally, Kondrat also privately emailed two Game Design experts (U. Benjaminsson and A. Mayes) and interviewed them. The experts agreed that there was a "vicious circle" where "there are not enough developers creating strong women, so publishers and developers don’t think that games with women sell, so they don’t make games with strong women” (Mayes, 2014). This may explain why the problem of stereotyping is so prevalent in the medium.</p>
+                                <br><b>Kondrat, X. (2015). Gender and video games: How is female gender generally represented in various genres of video games? Journal of comparative research in anthropology and sociology., 6(1), 171-193.</b>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>                          
+                                <p>A. Summers and M. Miller's 2014 examination of video game magazines found that the portrayal of female video game characters had changed in the last twenty years from one stereotype into another. A total of 223 female characters from 175 game magazines were coded. The results of the study found that, over time, there has been a decrease in benevolent sexism and an increase in hostile sexism. In the discussion of their results, Summers and Miller note that this sexist shift may impact attitudes, which have very real consequences outside the game arena. Specifically, these portrayals of women may impact how males view women. They cite several studies that show that portraying women as sex objects may encourage negative attitudes toward women. Furthermore, they are also concerned with the negative implications for how women view themselves. They again cite sources that state that women who are exposed to sexist ads end up having lower self-esteem. They conclude that the stereotypes caused by both benevolent and hostile sexism can lead youths to adopt these sexist attitudes, which can be detrimental to their perception of the world.</p>
+                                <br><b>Alicia S. &amp; Monica K. M. (2014). From Damsels in Distress to Sexy Superheroes. Feminist Media Studies, 14(6), 1028-1040.</b>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>                          
+                                <p>Scharrer's 2009 content analysis of video game advertisements contained in large-circulation video game magazines also shows the harmful stereotypes that arise from the depiction of women in video games. Scharrer discusses two specific psychological concepts in her research: hypermasculinity and hyperfemininity. Hypermasculitiny is a term applied to performances of masculinity in which “macho” characteristics are carried out to the point of exaggeration. Traits of HM include callous attitudes towards sex, perceiving violence as manly, and perceiving danger as thrilling. Hyperfemininity is a term used to describe individuals’ adherence to a stereotypical and exaggerated feminine gender role idealization that emphasizes dependence, passivity, and a view of women as sexual objects. The core traits of HF include the belief that a woman's success depends on acquiring a man, the use of sexuality to secure a relationship, and the expectation that men meet traditional gender roles that include aggression and the initiation of sex. Prior to her research, Scharrer hypothesized that males would appeal to notions of HM and females would take roles that emphasize HF. The results did show evidence for HM, especially the pursuit of danger as thrill. Evidence for HF was also present, but not as present as HM because  female characters were not emphasized or developed enough in the ad to be able to assign some motive for their behavior. Overall, the results of this content analysis demonstrate rather convincingly that gender stereotypes abound in video games.</p>
+                                <br><b>Scharrer, E. (2009). Virtual Violence: Gender and Aggression in Video Game Advertisements. Mass Communication and Society, 7(4), 393-412</b>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>                          
+                                <p>E. Behm-Morawitz's 2014 content analysis examines the diversity of gender and race representations in video game advertising in the USA, and delves into the harmful stereotypes these advertisements portray. The study coded 383 US magazine advertisements of console, mobile, and PC video games. As discussed above, the results found that female characters are disproportionately sexualized in comparison to male characters. However, it is notable that  White and Asian female characters are especially so, and Black female characters are not sexualized to the same degree. The study also finds that Black men are portrayed as the most muscular, but also the least attractive, as well as the most likely to wield a fun. Asian characters were the most violent and the most likely to wield swords. And White characters are depicted as the least violent and most attractive group. Overall, the study concludes that video game advertisements uphold some longstanding media stereotypes of racial/ethnic minorities and women. Support can be found for the stereotypic portrayals of the White male hero, submissive sexualized female, Asian ninja, and deviant Black male. Behm-Morawitz argues that video game advertisers’ reliance on stereotypes to appeal to a mass audience has an impact beyond sales, and cites Scharrer to argue that video game advertisements highlight prominent game representations and reflect the cultural messages about race/ ethnicity, gender, and violence being communicated to video game fans.</p>
+                                <br><b>Behm-Morawitz, E. (2014). Examining the intersection of race and gender in video game advertising. Journal of Marketing Communications, 23(17), 220-239</b>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <a class="left carousel-control" href="#text-carousel-info4" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      </a>
+     <a class="right carousel-control" href="#text-carousel-info4" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+
+    </div>
+</div>
+    <div id="modalfooter" class="modal-footer">
+        <p> Total works cited: 4 </p>
+      </div>
+  </div>
+</div>
+
+<div id="convomodalwindow3" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="convoModalLabel3" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content-convo">
+        <div>
+            <!-- <h2 id="elfhead" class="centertext"> BLAHBLAH</h2> -->
+            <img src="./images/elfhead.png" style="position:absolute; width:170px; height:170px">
+        </div>
+
+     <div id="text-carousel-convo-3" class="carousel slide" data-ride="carousel" data-interval="false">
+        <div class="row">
+            <h2 class="centertext"> Elf Chief</h2>
+        </div>
+
+        <!-- Wrapper for slides -->
+        <div class="row">
+            <div class="col-xs-offset-3 col-xs-6">
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <div class="carousel-content">
+                            <div id="apology">
+                                <!-- filled in by script -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>
+                                <p>...</p><br><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>
+                                <p>You're angry about being left behind in the village while we fought off that monster? And being asked to cook? So you wish to be treated more equally, like the men of our tribe.</p><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>
+                                <p>...I see. In that case, I apologize. We as a people may have some archaic beliefs, but we can always strive to change. The next time our village is attacked, please join us in battle. We would appreciate your strength.</p><br>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <!-- Controls --> <!-- <a class="left carousel-control" href="#text-carousel-convo" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      </a> -->
+     <a class="right carousel-control" href="#text-carousel-convo-3" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+
+    </div>
+</div>
+  </div>
+</div>
+
+<div id="talkmodalwindow9" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="talkModalLabel9" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+    <div id="text-carousel-talk-9" class="carousel slide" data-ride="carousel" data-interval="false">
+        <!-- Wrapper for slides -->
+        <div class="carousel-content-talk">
+            <div>
+                <p>Hey, that was pretty easy! Great job! This seems like a good sign.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+  </div>
+</div>
+
+
+<div id="infomodalwindow5" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel5" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div id="modalheader" class="modal-header">
+        <!-- <span class="close">&times;</span> -->
+        <h2 class="centertext"> Topic 5: Where do we go from here? </h2>
+      </div>
+
+    <div class="modal-content-large">
+
+    <div id="text-carousel-info5" class="carousel slide" data-ride="carousel" data-interval="false">
+        <div class="row">
+            <div class="col-xs-offset-3 col-xs-6">
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <div class="carousel-content">
+                            <div>
+                                <p>By now, we have seen enough evidence to conclude that women have an overall negative representation in video games at this point in time. Female characters in video games are subjected to overexcessive sexualization, a lack of significant representation, a lack of active and strong characters, and prolific stereotyping. However, there is still hope for improvement. So what lies in the future of the representation of women in video games?
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>
+                                <p>X. Kondrat(2014)'s survey research is evidence that improvements may come in the future. Based on the replies of the respondents, the audience of video games are also concerned about the negative stereotyping of women as well as men. The majority of them have also expressed a desire for changes. Several respondents also proposed solutions of their own through the open-ended questions, which included introducing more female game developers to the industry, attracting more females to play video games, and creating more female protagonists of video games who are not objectified or sexualized. Additionally, many  also reported that the situation has been improving in recent years and that they have hope for the future. According to the responses of the two experts that Kondrat interviewed, there has been a steady improvement in the representation of the female gender in alternative and independent video game companies. However, these games, despite having good female representation, are not being played because they are made by smaller companies. The large mainstream game companies continue to create games using the stereotypes and show little signs of change. One expert, Benjaminsson, comments that the companies are only after money and they want to develop what will sell, so our best chance at this point is "an educated and critical audience to reward and appreciate challenging and thoughtful games.” By showing the companies that there is indeed a market for games with good female representation, we may be able to change their ways. </p>
+                                <br><b>Kondrat, X. (2015). Gender and video games: How is female gender generally represented in various genres of video games? Journal of comparative research in anthropology and sociology., 6(1), 171-193.</b>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>                          
+                                <p>A. Summers and M. Miller's 2014 examination of video game magazines tracked the changes in the portrayal of female video game characters in the last twenty years. The results of the study found that, over time, there has been a decrease in benevolent sexism and an increase in hostile sexism. Contrasting Summers and Miller's findings with Dietz's from 16 years earlier illustrates the transition very clearly. Dietz's study did not find an excessive amount of sexualization; only 28% of the games were found to have extremely sexualized women. In its stead, Dietz was concerned with the recurring depiction of women as "damsals in distress" who need rescuing from the main male character. On the other hand, Summers and Miller found few dainty feminine princesses who require rescue. Instead, they found sexy and sexualized females who could be the active protagonist of their game. This progression shows that the current state of female representation in video is not fixed, but malleable. If it changed once before, surely it could change again. Although we are still not at an ideal place right now, having simply transitioned from one form of sexism to another, the fact that we have improved upon the issues that were prolific in Dietz's day shows that there is a chance that we will resolve today's issues as well.</p>
+                                <br><b>Alicia S. &amp; Monica K. M. (2014). From Damsels in Distress to Sexy Superheroes. Feminist Media Studies, 14(6), 1028-1040.<br><br>Dietz, T. L. (1998). An Examination of Violence and Gender Role Portrayals in Video Games: Implications for Gender Socialization and Aggressive Behavior. Sex Roles, 38(5-6), 425-442</b>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="carousel-content">
+                            <div>                          
+                                <p>A. Harvey, in her 2014 paper "Everyone Can Make Games!", analyzes the recent calls for diversity and inclusion of female developers in the industry of digital games. According to Harvey, the digital game industry is currently in a transition period of feminism and postfeminism. As such, there is significant tension between women-focused inclusivity movements such as the Difference Engine Initiative (DEI) and post-feminists. In particular, she focuses on three post-feminist articulations by notable female figures in the North American digital games community to provide insight into the process of bringing change into a conservative culture of production. The first is Robin Hunicke’s 2010 Indie Game Rant at the Game Developers Conference, which was the inspiration for the DEI. The second is an article written in October 2011 by games journalist Leigh Alexander entitled "I’m Tired of Being a ‘Woman in Games.’ I’m a Person." Finally, the third example is a 2012 presentation at the Game Developers Conference (GDC) by independent game designer Mare Sheppard entitled “Why I Hate Women in Games Initiatives.” These three pieces all illustrate the contradictions and difficulty in being a spokesperson for gender issues as a female in a context that is deeply unfriendly to women in general, and decidedly hostile towards feminists in particular. Hunicke and Alexander both lament their status as the "token woman," where they must constantly pay lip-service to the importance of diversity and the need to address and rectify the rampant sexism in the industry.  Sheppard criticizes women-only initiatives like the DEI and equates them to a "victim support group" that only serves to discriminate against interested participants. She instead calls for systems of meritocracy where one's gender does not any advantages or disadvantages. Harvey's analyses show that the game industry is in a turbulent stage in recent years, and there are many directions in which it could go. However, whether it be through the feminist method of inclusionary initiatives like the DEI or post-feminist meritocratic methods, there will someday be sufficient opportunities for women to enter the currently male-dominated industry of digital games. And with more female developers will likely come better female characters and better female representation.
+                                </p>
+                                <br><b>Harvey, A. &amp; Fisher, S. (2014). “Everyone Can Make Games!”: The post-feminist context of women in digital game production. Feminist Media Studies, 15(4), 576-592.</b>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <a class="left carousel-control" href="#text-carousel-info5" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      </a>
+     <a class="right carousel-control" href="#text-carousel-info5" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+
+    </div>
+</div>
+    <div id="modalfooter" class="modal-footer">
+        <p> Total works cited: 4 </p>
+      </div>
+  </div>
+</div>
+
+
+<div id="talkmodalwindow10" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="talkModalLabel10" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+    <div id="text-carousel-talk-10" class="carousel slide" data-ride="carousel" data-interval="false">
+        <!-- Wrapper for slides -->
+        <div class="carousel-content-talk">
+            <div>
+                <p>That's the end of my capstone presentation! Hopefully now, you understand a little bit of what it's like to be a female character in a video game. Thanks for playing!</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+  </div>
+</div>
+
+    <!-- <div id="charmodalwindow" class="modal animated slideInDown">
+      <div class="modal-content">
+          <div id="modalheader" class="modal-header">
+            <span class="close">&times;</span>
+            <h2> Gambling Tray and Dice </h2> <i>Redbud Sage, Sedge, Bracken Fern, Abalone Shell, Walnut Shell, and Beeswax</i> <br> ca. 1890
+          </div>
+
+          <div id="modalcontent" class="modal-body">
+            <div>
+              <img src="./images/placeholder.png" width=200 class="pic">
+                
+              <div class="desc">
+               
+                <p class="text">Yokuts women played a game using trays and dice, like those here. The game, played by two teams of two, involved throwing the dice, called hoo'utch, onto the tral, called tiwon. Depending on how the dice landed, money changed hands. Such games were played at social gatherings, including funerals, where it was important to give thanks to community members.</p>
+              </div>
+            </div>
+          </div>
+
+          <div id="modalfooter" class="modal-footer">
+           <b>Culture: </b> Yokuts <br> <b>Location: </b> United States, Central California
+          </div>
+        </div>
+    </div> -->
+
+    <div id="blocker">
+
+        <div id="instructions">
+            <span style="font-size:40px">Click to Enter</span>
+            <br /> (W, A, S, D = Move)
+        </div>
+
+    </div>
+
+    <div id="endblocker">
+
+        <div id="endinstructions">
+            <span style="font-size:40px">Game Completed!</span>
+            <br /> Refresh to play again
+        </div>
+
+    </div>
+
+    <script>
+    function showHamburger(x) {
+        x.classList.toggle("change");
+        document.getElementById("dropdown").classList.toggle("show");
+    }
+
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+      acc[i].onclick = function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        panel.classList.toggle("show");
+        if (panel.style.maxHeight){
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        } 
+      }
+    }
+    </script>
+
+    <script>
+
+        var camera, scene, renderer;
+        var geometry, material, mesh;
+        var controls;
+        var container, stats;
+
+        var objects = [];
+
+        var myobjects = [];
+        var elfpeople = [];
+        var felves = [];
+
+        var nodenames = [];
+
+        var raycaster;
+        var mouse, INTERSECTED;
+        var nameVisible = false;
+
+        var blocker = document.getElementById('blocker');
+        var instructions = document.getElementById('instructions');
+
+        var endblocker = document.getElementById('endblocker');
+        var endinstructions = document.getElementById('endinstructions');
+
+        // var nameblocker = document.getElementById('nameblocker');
+        // var nameform = document.getElementById('nameform');
+        // nameblocker.style.display = 'none';
+        // nameform.style.display = 'none';
+
+        var element = document.body;
+
+        var isOff = false;
+
+        function turnOff() {
+            controls.enabled = false;
+            controlsEnabled = false;
+
+            endblocker.style.display = '-webkit-box';
+            endblocker.style.display = '-moz-box';
+            endblocker.style.display = 'box';
+
+            endinstructions.style.display = 'block';
+            isOff = true;
+        }
+
+        instructions.addEventListener('click', function(event) {
+            if (!isOff) {
+                instructions.style.display = 'none';
+                // controlsEnabled = true;
+                // controls.enabled = true;
+
+                blocker.style.display = 'none';
+            
+                startUp();
+            }
+
+        }, false);
+
+        // init();
+        // animate();
+
+        var controlsEnabled = false;
+        // controls.enabled = true;
+
+        var moveForward = false;
+        var moveBackward = false;
+        var moveLeft = false;
+        var moveRight = false;
+        //var canJump = false;
+
+        var pitchUp = false;
+        var pitchDown = false;
+        var yawLeft = false;
+        var yawRight = false;
+
+        var prevTime = performance.now();
+        var velocity = new THREE.Vector3();
+
+        var name;
+        var nameEntered;
+        var modalOn;
+        var once = true;
+        var convo;
+        var wait = false;
+
+        function startUp() {
+            $('#talkmodalwindow').modal('show').delay( 800 );
+        }
+
+        $('#talkmodalwindow').on('hidden.bs.modal', function(){
+            if (!nameEntered) {
+                getName();
+            }
+        });
+
+        function getName() {
+            nameEntered = true;
+            name = $("#nameform #nameInput").val();
+
+            $('#talkmodalwindow').find('form')[0].reset();
+            $('#talkmodalwindow').modal('hide');
+
+            init();
+            animate();
+
+            controlsEnabled = true;
+            controls.enabled = true;
+
+            var fill = document.getElementById('fillcont');
+            fill.innerHTML = "";
+            var div = document.createElement('div');
+            var msg = document.createElement('p');
+            msg.innerHTML = "So, it’s " + name + ", right? That’s a nice name! But what’s a name without a face? Go on and create your character by clicking that floating blue orb over there! <br> (Click anywhere outside of this instruction box to move on.)";
+            div.appendChild(msg);
+            fill.appendChild(div);
+
+            $('#fillmodalwindow').modal('show');
+        }
+
+        $('#charmodalwindow').on('hidden.bs.modal', function(){
+            $('#talkmodalwindow2').modal('show');
+        });
+
+        $('#talkmodalwindow2').on('hidden.bs.modal', function(){
+            $('#infomodalwindow1').modal('show');
+        });
+
+        $('#infomodalwindow1').on('hidden.bs.modal', function(){
+            $('#talkmodalwindow3').modal('show');
+        });
+
+        $('#talkmodalwindow4').on('hidden.bs.modal', function(){
+            populate();
+            // $('#talkmodalwindow5').modal('show').delay(3000);
+            wait = true;
+            setTimeout(function() {
+                wait = false;
+                $('#talkmodalwindow5').modal('show');
+            }, 2000);
+        });
+
+        function populate() {
+            for (var i = 0; i < elfpeople.length; i++) {
+                // var elfsp = elfpeople[i];
+                elfpeople[i].visible = true;
+            }
+        }
+
+        $('#talkmodalwindow5').on('hidden.bs.modal', function(){
+            $('#infomodalwindow2').modal('show');
+        });
+
+        $('#infomodalwindow2').on('hidden.bs.modal', function(){
+            $('#talkmodalwindow6').modal('show');
+        });
+
+        $('#talkmodalwindow6').on('hidden.bs.modal', function(){
+            convo.visible = true;
+        });
+
+        function greet() {
+            var grt = document.getElementById('greeting');
+            grt.innerHTML = "";
+            var div = document.createElement('div');
+            var msg = document.createElement('p');
+            msg.innerHTML = "Ah, " + name + "! So you've returned. You know, you shouldn't be wandering around so much while that ferocious monster is still out there.";
+            div.appendChild(msg);
+            grt.appendChild(div);
+        }
+
+        $('#convomodalwindow').on('hidden.bs.modal', function(){
+            convo.visible = false;
+            for (var i = 0; i < elfpeople.length; i++) {
+                // var elfsp = elfpeople[i];
+                elfpeople[i].visible = false;
+            }
+            for (var i = 0; i < felves.length; i++) {
+                felves[i].visible = true;
+            }
+            wait = true;
+            setTimeout(function() {
+                wait = false;
+                $('#talkmodalwindow7').modal('show');
+            }, 1500);
+        });
+
+        $('#talkmodalwindow7').on('hidden.bs.modal', function(){
+            $('#infomodalwindow3').modal('show');
+        });
+
+        var conf = document.getElementById('confetti');
+        $('#infomodalwindow3').on('hidden.bs.modal', function(){
+            conf.style.display="block";
+            wait = true;
+            setTimeout(function() {
+                wait = false;
+                getCookin();
+            }, 2000);
+        });
+
+        function getCookin() {
+            for (var i = 0; i < felves.length; i++) {
+                felves[i].visible = true;
+            }
+
+            populate();
+
+            conf.style.display="none";
+
+            var grt = document.getElementById('getcookin');
+            grt.innerHTML = "";
+            var div = document.createElement('div');
+            var msg = document.createElement('p');
+            msg.innerHTML = "Come " + name + ", isn't it time for a celebration dinner? You and the other women ought to go prepare the food!<br><br>";
+            div.appendChild(msg);
+            grt.appendChild(div);
+
+            $('#convomodalwindow2').modal('show');
+        }
+
+        $('#convomodalwindow2').on('hidden.bs.modal', function(){
+            $('#talkmodalwindow8').modal('show');
+        });
+
+        $('#talkmodalwindow8').on('hidden.bs.modal', function(){
+            $('#infomodalwindow4').modal('show');
+        });
+
+        $('#infomodalwindow4').on('hidden.bs.modal', function(){
+            apologize();
+            $('#convomodalwindow3').modal('show');
+        });
+
+        function apologize() {
+            var grt = document.getElementById('apology');
+            grt.innerHTML = "";
+            var div = document.createElement('div');
+            var msg = document.createElement('p');
+            msg.innerHTML = "What's wrong, " + name + "? You seem discontent.<br><br><br>";
+            div.appendChild(msg);
+            grt.appendChild(div);
+        }
+
+        $('#convomodalwindow3').on('hidden.bs.modal', function(){
+            $('#talkmodalwindow9').modal('show');
+        });
+
+        $('#talkmodalwindow9').on('hidden.bs.modal', function(){
+            $('#infomodalwindow5').modal('show');
+        });
+
+        $('#infomodalwindow5').on('hidden.bs.modal', function(){
+            $('#talkmodalwindow10').modal('show');
+        });
+
+        $('#talkmodalwindow10').on('hidden.bs.modal', function(){
+            turnOff();
+        });
+
+
+        // $('.modal').on('show.bs.modal', function (e) {
+        //     $('.modal').attr('class', 'fadeIn  animated');
+        // })
+        // $('.modal').on('hide.bs.modal', function (e) {
+        //     $('.modal').attr('class', 'fadeOut  animated');
+        // })
+
+        // document.getElementById("defaultOpen").click();
+
+        // function changeChar(evt, charName) {
+        //   // Declare all variables
+        //   var i, chars, charpics;
+
+        //   // Get all elements with class="char" and remove the class "chosen" 
+        //   chars = document.getElementsByClassName("char");
+        //   for (i = 0; i < chars.length; i++) {
+        //       chars[i].className = chars[i].className.replace(" chosen", "");
+        //   }
+
+        //   // Get all elements with class="charpics" and hide them
+        //   charpics = document.getElementsByClassName("charpic");
+        //   for (i = 0; i < charpics.length; i++) {
+        //       charpics[i].style.display = "none";
+        //   }
+
+        //   // Show the current tab, and add an "chosen" class to the button that opened the tab
+        //   document.getElementById(charName).style.display = "block";
+        //   evt.currentTarget.classList.toggle("chosen");
+        // }
+
+        function init() {
+
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+
+            scene = new THREE.Scene();
+
+
+            // controls = new THREE.PointerLockControls(camera);
+            controls = new THREE.FirstPersonControls(camera);
+            scene.add(controls.getObject());
+
+            var ambient = new THREE.AmbientLight(0x404040);
+            scene.add(ambient);
+
+            var light = new THREE.PointLight( 0xffffff, 1, 100 );
+            // light.position.set( 50, 50, 50 );
+            //scene.add( light );
+            light.position.set( 10, 10, 10 );
+            scene.add( light );
+           // var directionalLight = new THREE.DirectionalLight(0xffeedd);
+            //directionalLight.position.set(0, 0, 1).normalize();
+           // scene.add(directionalLight);
+
+           // geometry
+           var geometry = new THREE.SphereGeometry( 0.5, 32, 32 );
+
+            // make character node
+           var node_char = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color: "rgb(66, 134, 244)", opacity: 0.5}));
+           node_char.position.set(0, 5, -28);
+
+           node_char.scale.set(1, 1, 1);  
+
+           node_char.name = "makechar";
+
+           scene.add(node_char);
+           myobjects.push(node_char);
+
+           // name of makechar node. hidden by default
+           var n1label = makeTextSprite("Make Your Character", {
+              fontsize: 24,
+              borderColor: {r:66, g:134, b:244, a:1.0},
+              backgroundColor: {r:255, g:255, b:255, a:1.0}
+           });
+           n1label.position.set(2, 2, 0);
+           scene.add( n1label );
+           nodenames.push(n1label);
+
+           node_char.add(n1label);
+
+           n1label.visible = false;
+
+           // elves group 1
+           var nnMap = new THREE.TextureLoader().load("./images/elves1.png");
+           nnMap.minFilter = THREE.LinearFilter;
+           var nnMaterial = new THREE.SpriteMaterial( { map: nnMap } );
+           var elves1 = new THREE.Sprite( nnMaterial );
+
+           elves1.position.set(-10, 6, -58);
+           elves1.name = "elves1";
+
+           scene.add(elves1);
+           elfpeople.push(elves1);
+           
+           elves1.scale.x = 10;
+           elves1.scale.y = 10;
+
+           elves1.visible = false;
+
+           // elves group 2
+           nnMap = new THREE.TextureLoader().load("./images/elves2.png");
+           nnMap.minFilter = THREE.LinearFilter;
+           nnMaterial = new THREE.SpriteMaterial( { map: nnMap } );
+           var elves2 = new THREE.Sprite( nnMaterial );
+
+           elves2.position.set(10, 6, -58);
+           elves2.name = "elves2";
+
+           scene.add(elves2);
+           elfpeople.push(elves2);
+           
+           elves2.scale.x = 10;
+           elves2.scale.y = 10;
+
+           elves2.visible = false;
+
+           // convo
+           nnMap = new THREE.TextureLoader().load("./images/convo.png");
+           nnMap.minFilter = THREE.LinearFilter;
+           nnMaterial = new THREE.SpriteMaterial( { map: nnMap } );
+           convo = new THREE.Sprite( nnMaterial );
+
+           convo.position.set(-5, 9, -58);
+           convo.name = "convo";
+
+           scene.add(convo);
+           myobjects.push(convo);
+           
+           convo.scale.x = 1;
+           convo.scale.y = 1;
+
+           convo.visible = false;
+
+           // felves group 1
+           nnMap = new THREE.TextureLoader().load("./images/felves1.png");
+           nnMap.minFilter = THREE.LinearFilter;
+           nnMaterial = new THREE.SpriteMaterial( { map: nnMap } );
+           var felves1 = new THREE.Sprite( nnMaterial );
+
+           felves1.position.set(-10, 6, -58);
+           felves1.name = "felves1";
+
+           scene.add(felves1);
+           felves.push(felves1);
+           
+           felves1.scale.x = 10;
+           felves1.scale.y = 10;
+
+           felves1.visible = false;
+
+           // felves group 2
+           nnMap = new THREE.TextureLoader().load("./images/felves2.png");
+           nnMap.minFilter = THREE.LinearFilter;
+           nnMaterial = new THREE.SpriteMaterial( { map: nnMap } );
+           var felves2 = new THREE.Sprite( nnMaterial );
+
+           felves2.position.set(10, 6, -58);
+           felves2.name = "felves2";
+
+           scene.add(felves2);
+           felves.push(felves2);
+           
+           felves2.scale.x = 10;
+           felves2.scale.y = 10;
+
+           felves2.visible = false;
+
+
+            // model
+            var onProgress = function(xhr) {
+                if (xhr.lengthComputable) {
+                    var percentComplete = xhr.loaded / xhr.total * 100;
+                    // console.log(Math.round(percentComplete, 2) + '% downloaded');
+                }
+            };
+            var onError = function(xhr) {};
+            THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
+            var mtlLoader = new THREE.MTLLoader();
+            mtlLoader.setBaseUrl('./obj/');
+            mtlLoader.setPath('./obj/');
+            mtlLoader.load('hallway.mtl', function(materials) {
+                materials.side = THREE.DoubleSide;
+                materials.color = new THREE.Color("rgb(189, 224, 179)");
+                materials.preload();
+                var objLoader = new THREE.OBJLoader();
+                objLoader.setMaterials(materials);
+                objLoader.setPath('./obj/');
+                objLoader.load('hallway.obj', function(object) {
+                    object.position.set(0,0,-55);
+                     // object.rotation = new THREE.Vector3(0,0,0);
+                    // object.rotation.x = -(Math.PI / 2);
+                    // object.rotation.z = Math.PI / 2;
+                    object.scale.x = 5;
+                    object.scale.y = 5;
+                    object.scale.z = 5;
+                   // object.rotation.x = 3.14159;
+                    // object.rotation.y = -3.14;
+                    //object.rotation.z = 1.5708;
+                    //object.position.y = 1;
+                    // console.log(object);
+                    scene.add(object);
+                }, onProgress, onError);
+            });
+
+            mtlLoader.load('sky.mtl', function(materials) {
+                materials.side = THREE.DoubleSide;
+                // materials.color = new THREE.Color("rgb(189, 224, 179)");
+                materials.preload();
+                var objLoader = new THREE.OBJLoader();
+                objLoader.setMaterials(materials);
+                objLoader.setPath('./obj/');
+                objLoader.load('sky.obj', function(object) {
+                    object.position.set(0,0,-55);
+                     // object.rotation = new THREE.Vector3(0,0,0);
+                    // object.rotation.x = -(Math.PI / 2);
+                    // object.rotation.z = Math.PI / 2;
+                    object.scale.x = 5;
+                    object.scale.y = 5;
+                    object.scale.z = 5;
+                   // object.rotation.x = 3.14159;
+                    // object.rotation.y = -3.14;
+                    //object.rotation.z = 1.5708;
+                    //object.position.y = 1;
+                    // console.log(object);
+                    scene.add(object);
+                }, onProgress, onError);
+            });
+
+                mtlLoader.load('floor.mtl', function(materials) {
+                materials.side = THREE.DoubleSide;
+                // materials.color = new THREE.Color("rgb(189, 224, 179)");
+                materials.preload();
+                var objLoader = new THREE.OBJLoader();
+                objLoader.setMaterials(materials);
+                objLoader.setPath('./obj/');
+                objLoader.load('floor.obj', function(object) {
+                    object.position.set(0,0,-55);
+                     // object.rotation = new THREE.Vector3(0,0,0);
+                    // object.rotation.x = -(Math.PI / 2);
+                    // object.rotation.z = Math.PI / 2;
+                    object.scale.x = 5;
+                    object.scale.y = 5;
+                    object.scale.z = 5;
+                   // object.rotation.x = 3.14159;
+                    // object.rotation.y = -3.14;
+                    //object.rotation.z = 1.5708;
+                    //object.position.y = 1;
+                    // console.log(object);
+                    scene.add(object);
+                }, onProgress, onError);
+            });
+
+            //
+            renderer = new THREE.WebGLRenderer();
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            //container.appendChild( renderer.domElement );
+            // container = document.getElementById('ThreeJS');
+            // container.appendChild( renderer.domElement);
+
+
+            var onKeyDown = function(event) {
+                modalOn = $('.modal').is(':visible');
+                if (!modalOn && !wait) {
+                    switch (event.keyCode) {
+
+                        case 38: // up
+                            pitchUp = true;
+                            break;
+
+                        case 87: // w
+                            moveForward = true;
+                            break;
+
+                        case 37: // left
+                            yawLeft = true;
+                            break;
+
+                        case 65: // a
+                            moveLeft = true;
+                            break;
+
+                        case 40: // down
+                            pitchDown = true;
+                            break;
+
+                        case 83: // s
+                            moveBackward = true;
+                            break;
+
+                        case 39: // right
+                            yawRight = true;
+                            break;
+
+                        case 68: // d
+                            moveRight = true;
+                            break;
+
+                        case 32: // space
+                            resetPos();
+                            break;
+
+                        case 27: // esc
+                            turnOff();
+                            break;
+
+                    }
+                }
+
+                
+
+            };
+
+            var onKeyUp = function(event) {
+                modalOn = $('.modal').is(':visible');
+                if (!modalOn && !wait) {
+
+                    switch (event.keyCode) {
+
+                        case 38: // up
+                            pitchUp = false;
+                            break;
+
+                        case 87: // w
+                            moveForward = false;
+                            break;
+
+                        case 37: // left
+                            yawLeft = false;
+                            break;
+
+                        case 65: // a
+                            moveLeft = false;
+                            break;
+
+                        case 40: // down
+                            pitchDown = false;
+                            break;
+
+                        case 83: // s
+                            moveBackward = false;
+                            break;
+
+                        case 39: // right
+                            yawRight = false;
+                            break;
+
+                        case 68: // d
+                            moveRight = false;
+                            break;
+
+                    }
+                }
+
+            };
+
+            document.addEventListener('keydown', onKeyDown, false);
+            document.addEventListener('keyup', onKeyUp, false);
+
+            // raycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, -1, 0), 0, 10);
+
+            raycaster = new THREE.Raycaster();
+
+            mouse = new THREE.Vector2();
+
+            document.addEventListener('mousedown', onDocumentMouseDown, false);
+            document.addEventListener('touchstart', onDocumentTouchStart, false);
+            document.addEventListener('mousemove', onDocumentMouseMove, false);
+
+           
+
+
+            //
+
+            renderer = new THREE.WebGLRenderer();
+            renderer.setClearColor(0xffffff);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+            // stats = new Stats();
+            // stats.domElement.style.position = 'absolute';
+            // stats.domElement.style.bottom = '0px';
+            // stats.domElement.style.zIndex = 100;
+            // container.appendChild( stats.domElement );
+
+            //
+
+            window.addEventListener('resize', onWindowResize, false);
+
+        }
+
+        function makeTextSprite( message, parameters )
+        {
+          if ( parameters === undefined ) parameters = {};
+          
+          var fontface = parameters.hasOwnProperty("fontface") ? 
+            parameters["fontface"] : "Arial";
+          
+          var fontsize = parameters.hasOwnProperty("fontsize") ? 
+            parameters["fontsize"] : 18;
+          
+          var borderThickness = parameters.hasOwnProperty("borderThickness") ? 
+            parameters["borderThickness"] : 4;
+          
+          var borderColor = parameters.hasOwnProperty("borderColor") ?
+            parameters["borderColor"] : { r:0, g:0, b:0, a:1.0 };
+          
+          var backgroundColor = parameters.hasOwnProperty("backgroundColor") ?
+            parameters["backgroundColor"] : { r:255, g:255, b:255, a:1.0 };
+            
+          var canvas = document.createElement('canvas');
+          // document.body.appendChild(canvas);
+          var context = canvas.getContext('2d');
+          context.font = "Bold " + fontsize + "px " + fontface;
+            
+          // get size data (height depends only on font size)
+          var metrics = context.measureText( message );
+          var textWidth = metrics.width;
+
+          // background color
+          context.fillStyle   = "rgba(" + backgroundColor.r + "," + backgroundColor.g + ","
+                          + backgroundColor.b + "," + backgroundColor.a + ")";
+          // border color
+          context.strokeStyle = "rgba(" + borderColor.r + "," + borderColor.g + ","
+                          + borderColor.b + "," + borderColor.a + ")";
+
+          context.lineWidth = borderThickness;
+          roundRect(context, borderThickness/2, borderThickness/2, textWidth + borderThickness, fontsize * 1.4 + borderThickness, 6);
+          // 1.4 is extra height factor for text below baseline: g,j,p,q.
+          
+          // text color
+          context.fillStyle = "rgba(0, 0, 0, 1.0)";
+
+          context.fillText( message, borderThickness, fontsize + borderThickness);
+          
+          // canvas contents will be used for a texture
+          var texture = new THREE.Texture(canvas) 
+          texture.needsUpdate = true;
+
+          var spriteMaterial = new THREE.SpriteMaterial( 
+            { map: texture } );
+          var sprite = new THREE.Sprite( spriteMaterial );
+          sprite.scale.set(0.5 * fontsize, 0.25 * fontsize, 1);
+          return sprite;  
+        }
+
+        // function for drawing rounded rectangles
+        function roundRect(ctx, x, y, w, h, r) 
+        {
+            ctx.beginPath();
+            ctx.moveTo(x+r, y);
+            ctx.lineTo(x+w-r, y);
+            ctx.quadraticCurveTo(x+w, y, x+w, y+r);
+            ctx.lineTo(x+w, y+h-r);
+            ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+            ctx.lineTo(x+r, y+h);
+            ctx.quadraticCurveTo(x, y+h, x, y+h-r);
+            ctx.lineTo(x, y+r);
+            ctx.quadraticCurveTo(x, y, x+r, y);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();   
+        }
+
+        function onDocumentTouchStart(event) {
+            event.preventDefault();
+            event.clientX = event.touches[0].clientX;
+            event.clientY = event.touches[0].clientY;
+            onDocumentMouseDown(event);
+        }
+
+        // Get the modal
+        var modal;
+
+        // Get the <span> element that closes the modal
+        // var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on <span> (x), close the modal
+        // span.onclick = function() {
+        //     // modal.style.display = "none";
+        //     $('#charmodalwindow').modal('hide');
+        // }
+
+        // When the user clicks anywhere outside of the modal, close it
+        // window.onclick = function(event) {
+        //     if (event.target == modal) {
+        //         // modal.style.display = "none";
+        //         $('#charmodalwindow').modal('hide');
+        //     }
+        // }
+
+        // var mheader = document.getElementById("modalheader");
+        // var mcontent = document.getElementById("modalcontent");
+        // var mfooter = document.getElementById("modalfooter");
+
+
+        // alert("You button was pressed");
+
+        function onDocumentMouseDown(event) {
+            event.preventDefault();
+            mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+            mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+
+            raycaster.setFromCamera( mouse, camera );
+            var intersects = raycaster.intersectObjects( myobjects );
+            if ( intersects.length > 0 ) {
+
+                var chosen = intersects[0].object;
+
+                if (controlsEnabled) {
+                  if (chosen.name == "makechar") {
+                    modal = document.getElementById('charmodalwindow');
+                    var elfname = document.getElementById('elfname');
+                    elfname.innerHTML = name + " the Elf";
+                    $('#charmodalwindow').modal('show');
+                    // $('#infomodalwindow').modal('show');
+                    // $('#talkmodalwindow').modal('show');
+                    // $('#charmodalwindow').modal('hide').delay(3000);
+
+                  }
+                  else if (chosen.name == "convo") {
+                    $('#convomodalwindow').modal('show');
+                    greet();
+                  }
+                }
+            }
+        }
+
+        function onDocumentMouseMove(event) {
+            event.preventDefault();
+            mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+            mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+        }
+
+        function onWindowResize() {
+
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+        }
+
+        function resetPos() {
+          controls.getObject().position.set(0,0,0);
+        }
+
+        function animate() {
+
+            requestAnimationFrame(animate);
+
+            if (controlsEnabled) {
+                raycaster.ray.origin.copy(controls.getObject().position);
+                raycaster.ray.origin.y -= 10;
+
+                var intersections = raycaster.intersectObjects(objects);
+
+                var isOnObject = intersections.length > 0;
+
+                var time = performance.now();
+                var delta = (time - prevTime) / 1000;
+
+                velocity.x -= velocity.x * 10.0 * delta;
+                velocity.z -= velocity.z * 10.0 * delta;
+
+                velocity.y -= velocity.y * 10.0 * delta;
+                //velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+
+                if (moveForward) velocity.z -= 400.0 * delta;
+                if (moveBackward) velocity.z += 400.0 * delta;
+
+                if (moveLeft) velocity.x -= 400.0 * delta;
+                if (moveRight) velocity.x += 400.0 * delta;
+
+                if (isOnObject === true) {
+                    velocity.y = Math.max(0, velocity.y);
+
+                    //canJump = true;
+                }
+
+                controls.getObject().translateX(velocity.x * delta);
+                controls.getObject().translateY(velocity.y * delta);
+                controls.getObject().translateZ(velocity.z * delta);
+
+                if (controls.getObject().position.y < 5) {
+
+                    velocity.y = 0;
+                    controls.getObject().position.y = 5;
+
+                    //canJump = true;
+
+                }
+
+                if (controls.getObject().position.z <= -43) {
+                    if (once) {
+                        velocity.x = 0;
+                        controls.getObject().position.z = -45;
+                        once = false;
+                        $('#talkmodalwindow4').modal('show');
+                    }
+                    
+
+                }
+
+                var PI_2 = Math.PI / 2;
+
+                // if (pitchUp) {
+                //     controls.getObject().rotation.x += 0.01;
+                //     controls.getObject().rotation.x = Math.max( - PI_2, Math.min( PI_2, controls.getObject().rotation.x ) );
+                // }
+                // if (pitchDown) {
+                //     controls.getObject().rotation.x -= 0.01;
+                //     controls.getObject().rotation.x = Math.max( - PI_2, Math.min( PI_2, controls.getObject().rotation.x ) );
+                // }
+
+                if (yawLeft) {
+                    controls.getObject().rotation.y += 0.01;
+                }
+                if (yawRight) {
+                    controls.getObject().rotation.y -= 0.01;
+                }
+
+                prevTime = time;
+
+            }
+
+            render();
+
+        }
+
+        function render() {
+            raycaster.setFromCamera( mouse, camera );
+            // var intersects1 = raycaster.intersectObjects( convo );
+            // if (intersects1.length > 0) {
+            //     document.body.style.cursor = "pointer";
+            // }
+            // else {
+            //     document.body.style.cursor = "default";
+            // }
+
+            var intersects = raycaster.intersectObjects( myobjects );
+            if ( intersects.length > 0 ) {
+                if ( INTERSECTED != intersects[ 0 ].object ) {
+                    if ( INTERSECTED ) {
+                        INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+
+                        if (nameVisible) {
+                            for (var i = 0; i < nodenames.length; i++) {
+                                nodenames[i].visible = false;
+                            }
+                        }
+                    }
+                    INTERSECTED = intersects[ 0 ].object;
+                    INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+                    if (INTERSECTED.name != "transport") {
+                      INTERSECTED.material.color.setHex( 0x00ffff );
+                    }
+                    // 
+                    document.body.style.cursor = "pointer";
+
+                    INTERSECTED.traverse( function(child) {
+                        child.visible = true;
+                        nameVisible = true;
+                    });
+
+                }
+            } else {
+                if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+                INTERSECTED = null;
+                
+                if (nameVisible) {
+                    for (var i = 0; i < nodenames.length; i++) {
+                        nodenames[i].visible = false;
+                    }
+                }
+                document.body.style.cursor = "default";
+            }
+            renderer.render( scene, camera );
+        }
+
+        
+    </script>
+
+
+</body>
+
+</html>
